@@ -12,7 +12,8 @@ public class Line {
         points = new boolean[numHorizonLine];
         for (int i = 0; i < numHorizonLine; i++) {
             points[i] = assignEachPoint(points, i);
-        }return points;
+        }
+        return points;
     }
 
     private boolean assignEachPoint(boolean[] points, int index) {
@@ -26,13 +27,6 @@ public class Line {
     }
 
     public boolean[] getPoints() {
-        return points;
-    }
-
-    public static void main(String[] args) {
-        Line line = new Line(5);
-        for (int i = 0; i < line.getPoints().length; i++) {
-            System.out.printf(String.valueOf(line.getPoints()[i]) + " ");
-        }
+        return this.points;
     }
 }

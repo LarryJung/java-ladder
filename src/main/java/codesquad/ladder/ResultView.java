@@ -18,8 +18,10 @@ public class ResultView {
     }
 
     public static void printLadder(Ladder ladder) {
+        System.out.println();
+        System.out.println("## LADDER ");
         for (int i = 0; i < ladder.getLadderForm().length; i++) {
-            printLadderHorizontal(ladder.getLadderForm()[i]);
+            printLadderHorizontal(ladder.getLadderForm()[i].getPoints());
             System.out.println();
         }
     }

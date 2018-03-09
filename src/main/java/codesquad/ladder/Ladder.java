@@ -2,23 +2,22 @@ package codesquad.ladder;
 
 public class Ladder {
     private int numPeople;
-    private int numLadder;
+    private Line[] ladderForm;
 
     public Ladder(int numPeople, int numLadder) {
+        this.ladderForm = makeLadderForm(numPeople-1, numLadder);
         this.numPeople = numPeople;
-        this.numLadder = numLadder;
     }
 
-    private boolean[][] makeLadderForm(int numHorizonLine, int numLadder) {
-        boolean[][] ladderForm = new boolean[numLadder][numHorizonLine];
+    private Line[] makeLadderForm(int numHorizonLine, int numLadder) {
+        Line[] ladderForm = new Line[numLadder];
         for (int i = 0; i < numLadder; i++) {
-            Line line = new Line(numHorizonLine);
-            ladderForm[i] = line.getPoints();
-        } return ladderForm;
+            ladderForm[i] = new Line(numHorizonLine);
+        }
+        return ladderForm;
     }
 
-    public boolean[][] getLadderForm() {
-        return makeLadderForm(this.numPeople-1, this.numLadder);
+    public Line[] getLadderForm() {
+        return this.ladderForm;
     }
-
 }
