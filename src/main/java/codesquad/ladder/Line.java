@@ -4,6 +4,10 @@ public class Line {
 
     private boolean[] points;
 
+    private static final int FIRST_INDEX = 0;
+
+    private static final int ONE_BEFORE_INDEX = 1;
+
     public Line(int numHorizonLine) {
         this.points = makeLineAtHorizon(numHorizonLine);
     }
@@ -17,12 +21,12 @@ public class Line {
     }
 
     private boolean assignEachPoint(boolean[] points, int index) {
-        if (index == 0) return LadderUtils.randomBoolean();
+        if (index == FIRST_INDEX) return LadderUtils.randomBoolean();
         return checkBeforeValue(points, index);
     }
 
     private boolean checkBeforeValue(boolean[] points, int index) {
-        if (points[index - 1]) return false;
+        if (points[index - ONE_BEFORE_INDEX]) return false;
         return LadderUtils.randomBoolean();
     }
 

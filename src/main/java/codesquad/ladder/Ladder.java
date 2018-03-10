@@ -1,17 +1,17 @@
 package codesquad.ladder;
 
 public class Ladder {
-    private int numPeople;
+
     private Line[] ladderForm;
 
-    public Ladder(int numPeople, int numLadder) {
-        this.ladderForm = makeLadderForm(numPeople-1, numLadder);
-        this.numPeople = numPeople;
+    public Ladder(int numPeople, int sizeLadder) {
+        int numHorizonLine = numPeople - 1;
+        this.ladderForm = makeLadderForm(numHorizonLine, sizeLadder);
     }
 
-    private Line[] makeLadderForm(int numHorizonLine, int numLadder) {
-        Line[] ladderForm = new Line[numLadder];
-        for (int i = 0; i < numLadder; i++) {
+    private Line[] makeLadderForm(int numHorizonLine, int sizeLadder) {
+        Line[] ladderForm = new Line[sizeLadder];
+        for (int i = 0; i < sizeLadder; i++) {
             ladderForm[i] = new Line(numHorizonLine);
         }
         return ladderForm;
