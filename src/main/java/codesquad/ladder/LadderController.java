@@ -5,16 +5,20 @@ import codesquad.ladder.exceptions.InvalidSizeLadderException;
 
 public class LadderController {
 
+    private static final int MIN_SIZE_LADDER = 2;
+
+    private static final int MIN_NMU_PEOPLE = 2;
+
     private Ladder ladder;
 
     public int numPeopleValidCheck(int numPeople) throws InvalidNumPeopleException {
-        if (numPeople < 2) {
+        if (numPeople < MIN_NMU_PEOPLE) {
             throw new InvalidNumPeopleException();
         } return numPeople;
     }
 
     public int sizeLadderValidCheck(int sizeLadder) throws InvalidSizeLadderException {
-        if (sizeLadder < 2) {
+        if (sizeLadder < MIN_SIZE_LADDER) {
             throw new InvalidSizeLadderException();
         } return sizeLadder;
     }
