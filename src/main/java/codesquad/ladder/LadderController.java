@@ -53,25 +53,25 @@ public class LadderController {
     }
 
     // 문자열을 받아서 문자열 유효성 체크 하고 player리스트 반환
-    private ArrayList<Player> playerNameCheckReturn(String[] strings) throws Exception {
-        if (!nameFinalCheck(strings)) {
+    private ArrayList<Player> playerNameCheckReturn(String[] playerNames) throws Exception {
+        ArrayList<String> names = new ArrayList<String>(Arrays.asList(playerNames));
+        if (!nameFinalCheck(names)) {
             throw new Exception();
         }
-        return makePlayers(strings);
+        return makePlayers(names);
     }
 
     // 문자열 받아서 player list로 변환
-    private ArrayList<Player> makePlayers(String[] strings) {
+    private ArrayList<Player> makePlayers(ArrayList<String> names) {
         ArrayList<Player> players = new ArrayList<Player>();
-
-        for (String string : strings) {
-            players.add(new Player(string));
+        for (String name : names) {
+            players.add(new Player(name));
         }
         return players;
     }
 
     // 문자열 받아서 중복 및 null 검사.
-    private static boolean nameFinalCheck(String[] names) {
+    private static boolean nameFinalCheck(ArrayList<String> names) {
         try {
             return nameOverlapCheck(names);
         } catch (NullPointerException e) {
@@ -81,10 +81,8 @@ public class LadderController {
     }
 
     // 문자열 받아서 중복된 이름이 있는지 검사
-    private static boolean nameOverlapCheck(String[] names) {
+    private static boolean nameOverlapCheck(ArrayList<String> list) {
         ArrayList<String> setlist = new ArrayList<String>();
-        ArrayList<String> list = new ArrayList<String>(Arrays.asList(names));
-
         for (String str : list) {
             eachNameCheck(str, setlist);
         }
@@ -112,4 +110,5 @@ public class LadderController {
     public ArrayList<Player> getPlayers() {
         return this.players;
     }
+
 }

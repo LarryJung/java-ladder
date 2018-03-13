@@ -1,5 +1,6 @@
 package codesquad.ladder;
 
+import java.util.ArrayList;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -23,9 +24,9 @@ public class ResultView {
         System.out.printf(ladderUnit);
     }
 
-    private static void printLadderHorizontal(Ladder ladder, boolean[] ladderOneLine) {
-        for (int i = 0; i < ladderOneLine.length; i++) {
-            printLadderUnit(ladderUnit(ladder, ladderOneLine[i]));
+    private static void printLadderHorizontal(Ladder ladder, ArrayList<Boolean> ladderOneLine) {
+        for (int i = 0; i < ladderOneLine.size(); i++) {
+            printLadderUnit(ladderUnit(ladder, ladderOneLine.get(i)));
         }
         System.out.printf(FRAME);
     }
@@ -42,10 +43,9 @@ public class ResultView {
         System.out.println();
         printPlayerNames(ladderController);
         Ladder ladder = ladderController.getLadder();
-        for (int i = 0; i < ladder.getLadderForm().length; i++) {
-            printLadderHorizontal(ladder, ladder.getLadderForm()[i].getPoints());
+        for (int i = 0; i < ladder.getLadderForm().size(); i++) {
+            printLadderHorizontal(ladder, ladder.getLadderForm().get(i).getPoints());
             System.out.println();
         }
     }
-
 }

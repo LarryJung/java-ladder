@@ -1,8 +1,10 @@
 package codesquad.ladder;
 
+import java.util.ArrayList;
+
 public class Line {
 
-    private boolean[] points;
+    private ArrayList<Boolean> points;
 
     private static final int FIRST_INDEX = 0;
 
@@ -12,25 +14,25 @@ public class Line {
         this.points = makeLineAtHorizon(numHorizonLine);
     }
 
-    private boolean[] makeLineAtHorizon(int numHorizonLine) {
-        points = new boolean[numHorizonLine];
+    private ArrayList<Boolean> makeLineAtHorizon(int numHorizonLine) {
+        points = new ArrayList<Boolean>(numHorizonLine);
         for (int i = 0; i < numHorizonLine; i++) {
-            points[i] = assignEachPoint(points, i);
+            points.add(assignEachPoint(points, i));
         }
         return points;
     }
 
-    private boolean assignEachPoint(boolean[] points, int index) {
+    private boolean assignEachPoint(ArrayList<Boolean> points, int index) {
         if (index == FIRST_INDEX) return LadderUtils.randomBoolean();
         return checkBeforeValue(points, index);
     }
 
-    private boolean checkBeforeValue(boolean[] points, int index) {
-        if (points[index - ONE_BEFORE_INDEX]) return false;
+    private boolean checkBeforeValue(ArrayList<Boolean> points, int index) {
+        if (points.get(index - ONE_BEFORE_INDEX)) return false;
         return LadderUtils.randomBoolean();
     }
 
-    public boolean[] getPoints() {
+    public ArrayList<Boolean> getPoints() {
         return this.points;
     }
 }
