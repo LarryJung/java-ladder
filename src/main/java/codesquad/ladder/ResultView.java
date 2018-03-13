@@ -1,36 +1,51 @@
 package codesquad.ladder;
 
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 public class ResultView {
 
-    private static final String LADDER_NAME = "## LADDER";
+    private static final int NAME_SIZE_CORRECTION = 1;
 
     private static final String FRAME = "|";
 
-    private static final String LADDER_LINE = "-";
+    private static final String LADDER_LINE_UNIT = "-";
 
-    private static final String LADDER_SPACE = " ";
+    private static final String LADDER_SPACE_UNIT = " ";
 
-    private static String ladderUnit(boolean isLine) {
-        return (isLine) ? FRAME+LADDER_LINE : FRAME+LADDER_SPACE;
+    private static String ladderUnit(Ladder ladder, boolean isLine) {
+        String ladderLine = IntStream.range(0, ladder.getLineSize()).mapToObj(i -> LADDER_LINE_UNIT).collect(Collectors.joining(""));
+        String ladderSpace = IntStream.range(0, ladder.getLineSize()).mapToObj(i -> LADDER_SPACE_UNIT).collect(Collectors.joining(""));
+        return (isLine) ? FRAME + ladderLine : FRAME + ladderSpace;
     }
 
-    private static void printLadderUnit(String ladderUnit){
+    private static void printLadderUnit(String ladderUnit) {
         System.out.printf(ladderUnit);
     }
 
-    private static void printLadderHorizontal(boolean[] ladderOneLine) {
+    private static void printLadderHorizontal(Ladder ladder, boolean[] ladderOneLine) {
         for (int i = 0; i < ladderOneLine.length; i++) {
-            printLadderUnit(ladderUnit(ladderOneLine[i]));
+            printLadderUnit(ladderUnit(ladder, ladderOneLine[i]));
         }
         System.out.printf(FRAME);
     }
 
-    public static void printLadder(Ladder ladder) {
+    private static void printPlayerNames(LadderController ladderController) {
+        String printNameSize = "%-" + Integer.toString(ladderController.getLadder().getLineSize() + NAME_SIZE_CORRECTION) + "s";
+        for (Player player : ladderController.getPlayers()) {
+            System.out.printf(String.format(printNameSize, player.getName()));
+        }
         System.out.println();
-        System.out.println(LADDER_NAME);
+    }
+
+    public static void printLadder(LadderController ladderController) {
+        System.out.println();
+        printPlayerNames(ladderController);
+        Ladder ladder = ladderController.getLadder();
         for (int i = 0; i < ladder.getLadderForm().length; i++) {
-            printLadderHorizontal(ladder.getLadderForm()[i].getPoints());
+            printLadderHorizontal(ladder, ladder.getLadderForm()[i].getPoints());
             System.out.println();
         }
     }
+
 }

@@ -1,6 +1,5 @@
 package codesquad.ladder;
 
-import codesquad.ladder.exceptions.InvalidNumPeopleException;
 import codesquad.ladder.exceptions.InvalidSizeLadderException;
 
 import java.util.ArrayList;
@@ -9,61 +8,82 @@ import java.util.List;
 
 public class LadderController {
 
-    private static final int MIN_SIZE_LADDER = 2;
-
-    private static final int MIN_NUM_PEOPLE = 2;
-
     private Ladder ladder;
 
-    private Player player;
+    private ArrayList<Player> players;
 
+    //생성자
     public LadderController() {
-        int numPeople = getNumPeople();
-        int sizeLadder = getSizeLadder();
-        this.ladder = new Ladder(numPeople, sizeLadder);
+        this.players = setPlayers();
+        int numPeople = this.players.size();
+        int lineSize = setLineSize(players);
+        int sizeLadder = setSizeLadder();
+        this.ladder = new Ladder(numPeople, sizeLadder, lineSize);
     }
 
-    public int numPeopleValidCheck(int numPeople) throws InvalidNumPeopleException {
-        if (numPeople < MIN_NUM_PEOPLE) {
-            throw new InvalidNumPeopleException();
-        } return numPeople;
-    }
-
-    public int sizeLadderValidCheck(int sizeLadder) throws InvalidSizeLadderException {
-        if (sizeLadder < MIN_SIZE_LADDER) {
-            throw new InvalidSizeLadderException();
-        } return sizeLadder;
-    }
-
-    public int getNumPeople(){
-        System.out.println("Put number of people\n>>");
-        try {
-            return numPeopleValidCheck(InputView.getNumber());
-        } catch (Exception e){
-            System.out.println("number of people must be over 2. try again");
-            return getNumPeople();
-        }
-    }
-
-    public int getSizeLadder(){
+    private int setSizeLadder() {
         System.out.println("Put size of Ladder\n>>");
         try {
             return sizeLadderValidCheck(InputView.getNumber());
-        } catch (Exception e){
+        } catch (Exception e) {
             System.out.println("size of ladder must be over 2. try again");
-            return getSizeLadder();
+            return setSizeLadder();
         }
     }
 
-    private static void eachNameCheck(String str, List<String> list){
-        if (!list.contains(str)) {
-            list.add(str);
+    // 이름에 따라서 사다리 라인 사이즈 결정
+    private int setLineSize(ArrayList<Player> players) {
+        int[] playerNameLengths = new int[players.size()];
+        for (int i = 0; i < players.size(); i++) {
+            playerNameLengths[i] = players.get(i).getName().length();
+        }
+        Arrays.sort(playerNameLengths);
+        return playerNameLengths[players.size() - 1];
+    }
+
+    // player 리스트 최종 반환 메소드
+    private ArrayList<Player> setPlayers() {
+        System.out.println("Put player's name (separator, \",\") >>");
+        try {
+            return playerNameCheckReturn(InputView.getString());
+        } catch (Exception e) {
+            System.out.println("getPlayers return");
+            return setPlayers();
         }
     }
 
-    private static boolean nameCheck(String[] names) {
-        List<String> setlist = new ArrayList<String>();
-        List<String> list = new ArrayList<String>(Arrays.asList(names));
+    // 문자열을 받아서 문자열 유효성 체크 하고 player리스트 반환
+    private ArrayList<Player> playerNameCheckReturn(String[] strings) throws Exception {
+        if (!nameFinalCheck(strings)) {
+            throw new Exception();
+        }
+        return makePlayers(strings);
+    }
+
+    // 문자열 받아서 player list로 변환
+    private ArrayList<Player> makePlayers(String[] strings) {
+        ArrayList<Player> players = new ArrayList<Player>();
+
+        for (String string : strings) {
+            players.add(new Player(string));
+        }
+        return players;
+    }
+
+    // 문자열 받아서 중복 및 null 검사.
+    private static boolean nameFinalCheck(String[] names) {
+        try {
+            return nameOverlapCheck(names);
+        } catch (NullPointerException e) {
+            System.out.println(" ,(쉼표) 로 구분된 값을 넣어 주세요.");
+            return false;
+        }
+    }
+
+    // 문자열 받아서 중복된 이름이 있는지 검사
+    private static boolean nameOverlapCheck(String[] names) {
+        ArrayList<String> setlist = new ArrayList<String>();
+        ArrayList<String> list = new ArrayList<String>(Arrays.asList(names));
 
         for (String str : list) {
             eachNameCheck(str, setlist);
@@ -71,7 +91,25 @@ public class LadderController {
         return (setlist.size() == list.size());
     }
 
-    public void startGame() {
-        ResultView.printLadder(this.ladder);
+    private static void eachNameCheck(String str, List<String> list) {
+        if (!list.contains(str)) {
+            list.add(str);
+        }
+    }
+
+    private int sizeLadderValidCheck(int sizeLadder) throws InvalidSizeLadderException {
+        int MIN_SIZE_LADDER = 2;
+        if (sizeLadder < MIN_SIZE_LADDER) {
+            throw new InvalidSizeLadderException();
+        }
+        return sizeLadder;
+    }
+
+    public Ladder getLadder() {
+        return this.ladder;
+    }
+
+    public ArrayList<Player> getPlayers() {
+        return this.players;
     }
 }

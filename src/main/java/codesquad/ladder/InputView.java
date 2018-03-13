@@ -17,13 +17,13 @@ public class InputView {
     }
 
 
-    private static String getString(){
+    public static String[] getString() {
         try {
-            System.out.println("사용자의 이름을 입력해 주세요.(구분자 ,)");
-            return scanner.nextLine();
-        } catch (InputMismatchException e){
+            return scanner.nextLine().split(",");
+        } catch (InputMismatchException e) {
             System.out.println("please put a string type");
-        } return "";
+        }
+        return null;
     }
 
 
