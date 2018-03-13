@@ -1,6 +1,6 @@
 package codesquad.ladder;
 
-import java.util.Scanner;
+import java.util.*;
 
 public class InputView {
 
@@ -15,4 +15,16 @@ public class InputView {
             return getNumber();
         }
     }
+
+
+    private static String getString(){
+        try {
+            System.out.println("사용자의 이름을 입력해 주세요.(구분자 ,)");
+            return scanner.nextLine();
+        } catch (InputMismatchException e){
+            System.out.println("please put a string type");
+        } return "";
+    }
+
+
 }

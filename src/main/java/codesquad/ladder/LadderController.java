@@ -3,16 +3,28 @@ package codesquad.ladder;
 import codesquad.ladder.exceptions.InvalidNumPeopleException;
 import codesquad.ladder.exceptions.InvalidSizeLadderException;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class LadderController {
 
     private static final int MIN_SIZE_LADDER = 2;
 
-    private static final int MIN_NMU_PEOPLE = 2;
+    private static final int MIN_NUM_PEOPLE = 2;
 
     private Ladder ladder;
 
+    private Player player;
+
+    public LadderController() {
+        int numPeople = getNumPeople();
+        int sizeLadder = getSizeLadder();
+        this.ladder = new Ladder(numPeople, sizeLadder);
+    }
+
     public int numPeopleValidCheck(int numPeople) throws InvalidNumPeopleException {
-        if (numPeople < MIN_NMU_PEOPLE) {
+        if (numPeople < MIN_NUM_PEOPLE) {
             throw new InvalidNumPeopleException();
         } return numPeople;
     }
@@ -43,10 +55,20 @@ public class LadderController {
         }
     }
 
-    public LadderController() {
-        int numPeople = getNumPeople();
-        int sizeLadder = getSizeLadder();
-        this.ladder = new Ladder(numPeople, sizeLadder);
+    private static void eachNameCheck(String str, List<String> list){
+        if (!list.contains(str)) {
+            list.add(str);
+        }
+    }
+
+    private static boolean nameCheck(String[] names) {
+        List<String> setlist = new ArrayList<String>();
+        List<String> list = new ArrayList<String>(Arrays.asList(names));
+
+        for (String str : list) {
+            eachNameCheck(str, setlist);
+        }
+        return (setlist.size() == list.size());
     }
 
     public void startGame() {
