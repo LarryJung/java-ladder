@@ -6,12 +6,9 @@ public class Ladder {
 
     private ArrayList<Line> ladderForm;
 
-    private int lineHorizonLength;
-
-    public Ladder(int numPeople, int sizeLadder, int lineHorizonLength) {
+    public Ladder(int numPeople, int sizeLadder) {
         int numHorizonLine = numPeople - 1;
         this.ladderForm = makeLadderForm(numHorizonLine, sizeLadder);
-        this.lineHorizonLength = lineHorizonLength;
     }
 
     private ArrayList<Line> makeLadderForm(int numHorizonLine, int sizeLadder) {
@@ -24,9 +21,5 @@ public class Ladder {
 
     public ArrayList<Line> getLadderForm() {
         return this.ladderForm;
-    }
-
-    public int getLineHorizonLength() {
-        return this.lineHorizonLength;
     }
 }
