@@ -22,8 +22,8 @@ public class InputView {
             return scanner.nextLine().split(",");
         } catch (InputMismatchException e) {
             System.out.println("please put a string type");
+            return null;
         }
-        return null;
     }
 
 

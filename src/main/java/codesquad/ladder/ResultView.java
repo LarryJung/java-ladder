@@ -15,8 +15,8 @@ public class ResultView {
     private static final String LADDER_SPACE_UNIT = " ";
 
     private static String ladderUnit(Ladder ladder, boolean isLine) {
-        String ladderLine = IntStream.range(0, ladder.getLineSize()).mapToObj(i -> LADDER_LINE_UNIT).collect(Collectors.joining(""));
-        String ladderSpace = IntStream.range(0, ladder.getLineSize()).mapToObj(i -> LADDER_SPACE_UNIT).collect(Collectors.joining(""));
+        String ladderLine = IntStream.range(0, ladder.getLineHorizonLength()).mapToObj(i -> LADDER_LINE_UNIT).collect(Collectors.joining(""));
+        String ladderSpace = IntStream.range(0, ladder.getLineHorizonLength()).mapToObj(i -> LADDER_SPACE_UNIT).collect(Collectors.joining(""));
         return (isLine) ? FRAME + ladderLine : FRAME + ladderSpace;
     }
 
@@ -32,7 +32,7 @@ public class ResultView {
     }
 
     private static void printPlayerNames(LadderController ladderController) {
-        String printNameSize = "%-" + Integer.toString(ladderController.getLadder().getLineSize() + NAME_SIZE_CORRECTION) + "s";
+        String printNameSize = "%-" + Integer.toString(ladderController.getLadder().getLineHorizonLength() + NAME_SIZE_CORRECTION) + "s";
         for (Player player : ladderController.getPlayers()) {
             System.out.printf(String.format(printNameSize, player.getName()));
         }
