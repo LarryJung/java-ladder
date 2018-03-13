@@ -1,4 +1,4 @@
-package codesquad.ladder;
+package codesquad.ladder.model;
 
 public class Player {
 
@@ -15,7 +15,4 @@ public class Player {
         return this.name;
     }
 
-    public int getLength() {
-        return length;
-    }
 }

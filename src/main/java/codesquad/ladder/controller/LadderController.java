@@ -1,19 +1,20 @@
-package codesquad.ladder;
+package codesquad.ladder.controller;
 
-import codesquad.ladder.exceptions.InvalidSizeLadderException;
+import codesquad.ladder.view.InputView;
+import codesquad.ladder.model.Ladder;
+import codesquad.ladder.model.Player;
+import codesquad.ladder.model.exceptions.InvalidSizeLadderException;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class LadderController {
 
-    private Ladder ladder;
-
     private static final int MIN_SIZE_LADDER = 1;
 
-    public static final int MAX_SIZE_NAME = 5;
+    private static final int MAX_SIZE_NAME = 5;
+
+    private Ladder ladder;
 
     private ArrayList<Player> players;
 
@@ -52,9 +53,8 @@ public class LadderController {
 
     // 사용자 이름 길이 최종 체크
     private static boolean nameMaxSizeCheck(ArrayList<String> names) throws RuntimeException {
-        for (String name : names) {
-            return eachNameSizeCheck(name);
-        } return true;
+        for (String name : names) return eachNameSizeCheck(name);
+        return true;
     }
 
     // 사용자 이름 길이 단위 체크
@@ -66,9 +66,7 @@ public class LadderController {
     // 사용자 이름 중복 최종 체크
     private static boolean nameOverlapCheck(ArrayList<String> names) {
         ArrayList<String> nameSet = new ArrayList<String>();
-        for (String name : names) {
-            eachNameCheck(name, nameSet);
-        }
+        for (String name : names) eachNameCheck(name, nameSet);
         return (nameSet.size() == names.size());
     }
 
@@ -80,9 +78,7 @@ public class LadderController {
     // 문자열 받아서 player list로 변환
     private ArrayList<Player> makePlayers(ArrayList<String> names) {
         ArrayList<Player> players = new ArrayList<Player>();
-        for (String name : names) {
-            players.add(new Player(name));
-        }
+        for (String name : names) players.add(new Player(name));
         return players;
     }
 

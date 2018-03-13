@@ -1,4 +1,6 @@
-package codesquad.ladder;
+package codesquad.ladder.model;
+
+import codesquad.ladder.controller.LadderUtils;
 
 import java.util.ArrayList;
 
@@ -35,4 +37,5 @@ public class Line {
     public ArrayList<Boolean> getPoints() {
         return this.points;
     }
+
 }

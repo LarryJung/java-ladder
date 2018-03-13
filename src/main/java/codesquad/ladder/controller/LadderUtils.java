@@ -1,4 +1,4 @@
-package codesquad.ladder;
+package codesquad.ladder.controller;
 
 public class LadderUtils {
 

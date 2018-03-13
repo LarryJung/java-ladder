@@ -1,4 +1,4 @@
-package codesquad.ladder;
+package codesquad.ladder.view;
 
 import java.util.*;
 
