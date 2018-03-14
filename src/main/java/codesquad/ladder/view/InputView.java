@@ -16,7 +16,6 @@ public class InputView {
         }
     }
 
-
     public static String[] getString() {
         try {
             return scanner.nextLine().split(",");

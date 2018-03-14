@@ -33,7 +33,7 @@ public class ResultView {
     }
 
     // 플레이어 이름 스트링 반환
-    private static String makePlayerNames(ArrayList<Player> players) {
+    static String makePlayerNames(ArrayList<Player> players) {
         StringBuilder playerNames = new StringBuilder();
         String printNameSize = "%-" + Integer.toString(LADDER_HORIZONTAL_LINE_UNIT + NAME_SIZE_CORRECTION) + "s"; // %-6s
         for (Player player : players) {
@@ -43,13 +43,13 @@ public class ResultView {
     }
 
     // 사다리 한 라인 스트링 반환
-    private static String makeLadderHorizontalLine(ArrayList<Boolean> ladderOneLine) {
+    static String makeLadderHorizontalLine(ArrayList<Boolean> ladderOneLine) {
         String ladderHorizontalLine = IntStream.range(0, ladderOneLine.size()).mapToObj(i -> ladderUnit(ladderOneLine.get(i))).collect(Collectors.joining(""));
         return ladderHorizontalLine+FRAME;
     }
 
     // 사다리 라인 유닛 스트링 반환
-    private static String ladderUnit(boolean isLine) {
+    static String ladderUnit(boolean isLine) {
         String ladderLine = IntStream.range(0, LADDER_HORIZONTAL_LINE_UNIT).mapToObj(i -> LADDER_LINE_UNIT).collect(Collectors.joining(""));
         String ladderSpace = IntStream.range(0, LADDER_HORIZONTAL_LINE_UNIT).mapToObj(i -> LADDER_SPACE_UNIT).collect(Collectors.joining(""));
         return (isLine) ? FRAME + ladderLine : FRAME + ladderSpace;
@@ -59,3 +59,5 @@ public class ResultView {
     private static void printString(String str) { System.out.printf(str); }
 
 }
+
+

@@ -1,5 +1,8 @@
 package codesquad.ladder.controller;
 
+import codesquad.ladder.model.exceptions.DuplicetedNameException;
+import codesquad.ladder.model.exceptions.InvalidNameSizeException;
+import codesquad.ladder.model.exceptions.InvalidPlayerNameException;
 import codesquad.ladder.view.InputView;
 import codesquad.ladder.model.Ladder;
 import codesquad.ladder.model.Player;
@@ -7,6 +10,8 @@ import codesquad.ladder.model.exceptions.InvalidSizeLadderException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 public class LadderController {
 
@@ -20,81 +25,83 @@ public class LadderController {
 
     //생성자
     public LadderController() {
-        this.players = initPlayers();
+        System.out.println("Put player's name (separator, \",\") >>");
+        this.players = initPlayers(InputView.getString());
         int numPeople = this.players.size();
-        int sizeLadder = initSizeLadder();
+        System.out.println("Put size of Ladder\n>>");
+        int sizeLadder = initSizeLadder(InputView.getNumber());
         this.ladder = new Ladder(numPeople, sizeLadder);
     }
 
     // player 리스트 최종 반환 메소드
-    private ArrayList<Player> initPlayers() {
-        System.out.println("Put player's name (separator, \",\") >>");
+    static ArrayList<Player> initPlayers(String[] inputNames) {
         try {
-            return playerNameCheckReturn(InputView.getString());
-        } catch (Exception e) {
-            System.out.println("Input error, there is no same name & each length must be lower than 5");
-            return initPlayers();
+            ArrayList<String> playerNames = new ArrayList<String>(playerNameCheckReturn(inputNames));
+            return makePlayers(playerNames);
+        } catch (InvalidPlayerNameException e) {
+            return initPlayers(inputNames);
         }
     }
 
-    // 문자열을 받아서 문자열 유효성 체크 하고 player리스트 반환
-    private ArrayList<Player> playerNameCheckReturn(String[] playerNames) throws RuntimeException {
+    // 문자열을 받아서 문자열 유효성 체크 하고 스트링 ArrayList 반환
+    static ArrayList<String> playerNameCheckReturn(String[] playerNames) {
         ArrayList<String> names = new ArrayList<String>(Arrays.asList(playerNames));
         if (!nameFinalCheck(names)) {
-            throw new RuntimeException();
+            throw new InvalidPlayerNameException();
         }
-        return makePlayers(names);
+        return names;
     }
 
     // 사용자 이름 유효값(길이, 중복) 최종 체크
-    private static boolean nameFinalCheck(ArrayList<String> names) throws NullPointerException{
-        return nameMaxSizeCheck(names) && nameOverlapCheck(names);
+    static boolean nameFinalCheck(ArrayList<String> names) throws InvalidPlayerNameException {
+        return nameMaxSizeCheck(names) && duplicatedNameCheck(names);
     }
 
     // 사용자 이름 길이 최종 체크
-    private static boolean nameMaxSizeCheck(ArrayList<String> names) throws RuntimeException {
-        for (String name : names) return eachNameSizeCheck(name);
+    static boolean nameMaxSizeCheck(ArrayList<String> names) {
+        for (String name : names) eachNameSizeCheck(name);
         return true;
     }
 
     // 사용자 이름 길이 단위 체크
-    private static boolean eachNameSizeCheck(String name){
-        if (name.length() > MAX_SIZE_NAME) throw new RuntimeException();
+    static boolean eachNameSizeCheck(String name) {
+        if (name.length() > MAX_SIZE_NAME) {
+            System.out.println("each name length must be lower than 5");
+            throw new InvalidNameSizeException();
+        }
         return true;
     }
 
     // 사용자 이름 중복 최종 체크
-    private static boolean nameOverlapCheck(ArrayList<String> names) {
-        ArrayList<String> nameSet = new ArrayList<String>();
-        for (String name : names) eachNameCheck(name, nameSet);
-        return (nameSet.size() == names.size());
-    }
-
-    // 사용자 이름 중복 단위 체크
-    private static void eachNameCheck(String name, ArrayList<String> nameSet) {
-        if (!nameSet.contains(name)) nameSet.add(name);
+    static boolean duplicatedNameCheck(ArrayList<String> names) {
+        Set<String> nameSet = new HashSet<String>();
+        nameSet.addAll(names);
+        if (nameSet.size() != names.size()) {
+            System.out.println("there are duplicated names.");
+            throw new DuplicetedNameException();
+        }
+        return true;
     }
 
     // 문자열 받아서 player list로 변환
-    private ArrayList<Player> makePlayers(ArrayList<String> names) {
+    static ArrayList<Player> makePlayers(ArrayList<String> names) {
         ArrayList<Player> players = new ArrayList<Player>();
         for (String name : names) players.add(new Player(name));
         return players;
     }
 
     // ladder size 최종 반환 메소드
-    private int initSizeLadder() {
-        System.out.println("Put size of Ladder\n>>");
+    int initSizeLadder(int inputSizeLadder) {
         try {
-            return sizeLadderValidCheck(InputView.getNumber());
-        } catch (Exception e) {
+            return sizeLadderValidCheckReturn(inputSizeLadder);
+        } catch (InvalidSizeLadderException e) {
             System.out.println("size of ladder must be over 2. try again");
-            return initSizeLadder();
+            return initSizeLadder(inputSizeLadder);
         }
     }
 
     // ladder 사이즈 길이 유효값 최종 체크
-    private int sizeLadderValidCheck(int sizeLadder) throws InvalidSizeLadderException {
+    static int sizeLadderValidCheckReturn(int sizeLadder) {
         if (sizeLadder < MIN_SIZE_LADDER) throw new InvalidSizeLadderException();
         return sizeLadder;
     }

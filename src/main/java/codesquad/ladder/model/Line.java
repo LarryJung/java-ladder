@@ -12,10 +12,12 @@ public class Line {
 
     private static final int ONE_BEFORE_INDEX = 1;
 
+    // 생성자
     public Line(int numHorizonLine) {
         this.points = makeLineAtHorizon(numHorizonLine);
     }
 
+    // 한 줄 블리언 배열 반환
     private ArrayList<Boolean> makeLineAtHorizon(int numHorizonLine) {
         points = new ArrayList<Boolean>(numHorizonLine);
         for (int i = 0; i < numHorizonLine; i++) {
@@ -24,14 +26,22 @@ public class Line {
         return points;
     }
 
-    private boolean assignEachPoint(ArrayList<Boolean> points, int index) {
+    // 블리언 하나 할당
+    private static boolean assignEachPoint(ArrayList<Boolean> points, int index) {
         if (index == FIRST_INDEX) return LadderUtils.randomBoolean();
-        return checkBeforeValue(points, index);
+        return checkBeforeValueAndReturn(points, index);
     }
 
-    private boolean checkBeforeValue(ArrayList<Boolean> points, int index) {
-        if (points.get(index - ONE_BEFORE_INDEX)) return false;
+    // 왼쪽 1칸 전 값 확인 후 값 할당
+    private static boolean checkBeforeValueAndReturn(ArrayList<Boolean> points, int index) {
+        if (isBeforeValueTrue(points, index)) return false;
         return LadderUtils.randomBoolean();
+    }
+
+    // 왼쪽 1칸 전 값이 true인지 false인지 확인
+    static boolean isBeforeValueTrue(ArrayList<Boolean> points, int index) {
+        if (points.get(index - ONE_BEFORE_INDEX)) return true;
+        return false;
     }
 
     public ArrayList<Boolean> getPoints() {
