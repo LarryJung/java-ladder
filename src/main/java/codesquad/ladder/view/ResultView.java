@@ -22,6 +22,7 @@ public class ResultView {
 
     // 사다리 출력
     public static void printLadder(LadderController ladderController) {
+
         Ladder ladder = ladderController.getLadder();
         System.out.println();
         printString(makePlayerNames(ladderController.getPlayers()));

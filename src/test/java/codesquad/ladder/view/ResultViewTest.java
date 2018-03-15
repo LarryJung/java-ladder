@@ -3,6 +3,8 @@ package codesquad.ladder.view;
 import codesquad.ladder.model.Player;
 import org.junit.Test;
 import java.util.ArrayList;
+import java.util.Arrays;
+
 import static org.junit.Assert.assertEquals;
 
 public class ResultViewTest {
@@ -21,10 +23,7 @@ public class ResultViewTest {
 
     @Test
     public void makeLadderHorizontalLineTest(){
-        ArrayList<Boolean> ladderOneLine = new ArrayList<Boolean>();
-        ladderOneLine.add(true);
-        ladderOneLine.add(false);
-        ladderOneLine.add(true);
+        ArrayList<Boolean> ladderOneLine = new ArrayList<>(Arrays.asList(true, false, true));
 
         String expectedLine = "|-----|     |-----|";
         assertEquals(expectedLine, ResultView.makeLadderHorizontalLine(ladderOneLine));
