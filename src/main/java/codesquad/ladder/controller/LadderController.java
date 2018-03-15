@@ -7,6 +7,7 @@ import codesquad.ladder.view.InputView;
 import codesquad.ladder.model.Ladder;
 import codesquad.ladder.model.Player;
 import codesquad.ladder.model.exceptions.InvalidSizeLadderException;
+import codesquad.ladder.view.ResultView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,23 +24,14 @@ public class LadderController {
 
     private ArrayList<Player> players;
 
-    //생성자
-    public LadderController() {
-        System.out.println("Put player's name (separator, \",\") >>");
-        this.players = initPlayers(InputView.getString());
-        int numPeople = this.players.size();
-        System.out.println("Put size of Ladder\n>>");
-        int sizeLadder = initSizeLadder(InputView.getNumber());
-        this.ladder = new Ladder(numPeople, sizeLadder);
-    }
-
     // player 리스트 최종 반환 메소드
-    static ArrayList<Player> initPlayers(String[] inputNames) {
+    private void initPlayers() {
         try {
-            ArrayList<String> playerNames = new ArrayList<String>(playerNameCheckReturn(inputNames));
-            return makePlayers(playerNames);
+            System.out.println("Put player's name (separator, \",\") \n>>");
+            ArrayList<String> playerNames = new ArrayList<String>(playerNameCheckReturn(InputView.getString()));
+            this.players = makePlayers(playerNames);
         } catch (InvalidPlayerNameException e) {
-            return initPlayers(inputNames);
+            initPlayers();
         }
     }
 
@@ -91,12 +83,13 @@ public class LadderController {
     }
 
     // ladder size 최종 반환 메소드
-    int initSizeLadder(int inputSizeLadder) {
+    private int initSizeLadder() {
         try {
-            return sizeLadderValidCheckReturn(inputSizeLadder);
+            System.out.println("Put ladder size \n>>");
+            return sizeLadderValidCheckReturn(InputView.getNumber());
         } catch (InvalidSizeLadderException e) {
             System.out.println("size of ladder must be over 2. try again");
-            return initSizeLadder(inputSizeLadder);
+            return initSizeLadder();
         }
     }
 
@@ -114,4 +107,13 @@ public class LadderController {
         return this.players;
     }
 
+    private void makeLadder(int numPeople, int sizeLadder){
+        this.ladder = new Ladder(numPeople, sizeLadder);
+    }
+
+    public void ladderGameStart() {
+        initPlayers();
+        int ladderSize = initSizeLadder();
+        makeLadder(this.players.size(), ladderSize);
+    }
 }
