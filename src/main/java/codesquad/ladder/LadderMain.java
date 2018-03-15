@@ -9,6 +9,7 @@ public class LadderMain {
         LadderController ladderController = new LadderController();
         ladderController.ladderGameStart();
         ResultView.printLadder(ladderController);
-
+        ladderController.matchTotalResult();
+//        ResultView.printResults(ladderController);
     }
 }

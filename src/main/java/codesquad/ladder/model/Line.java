@@ -12,7 +12,9 @@ public class Line {
 
     private static final int ONE_BEFORE_INDEX = 1;
 
-    // 생성자
+    // 생성자 1
+    public Line (ArrayList<Boolean> points) { this.points = points; }
+    // 생성자 2
     public Line(int numHorizonLine) {
         this.points = makeLineAtHorizon(numHorizonLine);
     }

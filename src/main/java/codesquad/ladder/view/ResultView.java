@@ -59,6 +59,14 @@ public class ResultView {
     // 스트링 출력 메소드
     private static void printString(String str) { System.out.printf(str); }
 
+    public static void printResults(LadderController ladderController) {
+        for (Player player: ladderController.getMap().keySet()){
+            String key = player.getName();
+            String value = ladderController.getMap().get(player).toString();
+            System.out.println(key + "번째 : " + value);
+        }
+
+    }
 }
 
 
