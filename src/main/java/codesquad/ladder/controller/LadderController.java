@@ -1,6 +1,7 @@
 package codesquad.ladder.controller;
 
 import codesquad.ladder.model.Prize;
+import codesquad.ladder.model.Tracker;
 import codesquad.ladder.model.exceptions.DuplicetedNameException;
 import codesquad.ladder.model.exceptions.InvalidNameSizeException;
 import codesquad.ladder.model.exceptions.InvalidNamesException;
@@ -148,6 +149,12 @@ public class LadderController {
         }
     }
 
+    public int findLadderResult2(int colIndex, Ladder ladder){
+        Tracker tracker = new Tracker(colIndex);
+        tracker.move(ladder);
+        return tracker.getCol();
+
+    }
 
     public ArrayList<Prize> getPrizes() {
         return this.prizes;
