@@ -16,19 +16,6 @@ import static org.junit.Assert.assertEquals;
 
 public class LadderControllerTest {
 
-    @Test
-    public void matchEachResultTest(){
-        ArrayList<Line> ladder = new ArrayList<Line>();
-        ladder.add(new Line(new ArrayList<>(Arrays.asList(true, false, true, false))));
-        ladder.add(new Line(new ArrayList<>(Arrays.asList(false, false, true, false))));
-        ladder.add(new Line(new ArrayList<>(Arrays.asList(false, true, false, false))));
-        assertEquals(2, LadderController.matchEachResult(0, ladder));
-        assertEquals(0, LadderController.matchEachResult(1, ladder));
-        assertEquals(1, LadderController.matchEachResult(2, ladder));
-        assertEquals(3, LadderController.matchEachResult(3, ladder));
-        assertEquals(4, LadderController.matchEachResult(4, ladder));
-    }
-
     @Test(expected = InvalidPlayerNameException.class)
     public void playerNameCheckReturnTest1() {
         String[] playerNames = {"pobi","pobi","honux","jk"};

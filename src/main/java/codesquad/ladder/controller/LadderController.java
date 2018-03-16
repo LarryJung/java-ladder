@@ -1,6 +1,5 @@
 package codesquad.ladder.controller;
 
-import codesquad.ladder.model.Line;
 import codesquad.ladder.model.exceptions.DuplicetedNameException;
 import codesquad.ladder.model.exceptions.InvalidNameSizeException;
 import codesquad.ladder.model.exceptions.InvalidPlayerNameException;
@@ -8,7 +7,7 @@ import codesquad.ladder.view.InputView;
 import codesquad.ladder.model.Ladder;
 import codesquad.ladder.model.Player;
 import codesquad.ladder.model.exceptions.InvalidSizeLadderException;
-import codesquad.ladder.view.ResultView;
+
 
 import java.util.*;
 
@@ -111,7 +110,6 @@ public class LadderController {
         return this.map;
     }
 
-
     private void makeLadder(int numPeople, int sizeLadder) {
         this.ladder = new Ladder(numPeople, sizeLadder);
     }
@@ -124,71 +122,7 @@ public class LadderController {
 
     public void matchTotalResult() {
         for (int i = 0; i < this.players.size(); i++) {
-            map.put(this.players.get(i), matchEachResult(i, this.ladder.getLadderForm()));
+            map.put(this.players.get(i), LadderUtils.findLadderResult(i, this.ladder));
         }
-    }
-
-    static int matchEachResult(int index, ArrayList<Line> ladderForm) {
-        int x = 0; // row index
-        int y = index; // column index
-        int maxRightIndex = ladderForm.get(1).getPoints().size();
-        String direction = "down"; // initialize
-        while (x < ladderForm.size()) {
-            switch (direction) {
-                case "down":
-                    if (y == 0) {
-                        if (ladderForm.get(x).getPoints().get(y)) {
-                            y = y + 1;
-                            direction = "right";
-                            break;
-                        }
-                        if (!ladderForm.get(x).getPoints().get(y)) {
-                            x = x + 1;
-                            direction = "down";
-                            break;
-                        }
-                    }
-                    if (y == maxRightIndex) {
-                        if (ladderForm.get(x).getPoints().get(y - 1)) {
-                            y = y - 1;
-                            direction = "left";
-                            break;
-                        }
-                        if (!ladderForm.get(x).getPoints().get(y - 1)) {
-                            x = x + 1;
-                            direction = "down";
-                            break;
-                        }
-                    }
-                    if (ladderForm.get(x).getPoints().get(y - 1)) {
-                        y = y - 1;
-                        direction = "left";
-                        break;
-                    }
-                    if (ladderForm.get(x).getPoints().get(y)) {
-                        y = y + 1;
-                        direction = "right";
-                        break;
-                    }
-                    if (((ladderForm.get(x).getPoints().get(y - 1) && ladderForm.get(x).getPoints().get(y)))) {
-                        x = x + 1;
-                        direction = "down";
-                        break;
-                    }
-
-                case "left":
-                    if (y == 0) { x = x + 1; direction = "down"; break; }
-                    if (ladderForm.get(x).getPoints().get(y - 1)) { y = y - 1; direction = "left"; break; }
-                    if (!ladderForm.get(x).getPoints().get(y - 1)) { x = x + 1; direction = "down"; break; }
-
-                case "right":
-                    if (y == maxRightIndex) { x = x + 1; direction = "down"; break; }
-                    if (ladderForm.get(x).getPoints().get(y)) { y = y + 1; direction = "right"; break; }
-                    if (!ladderForm.get(x).getPoints().get(y)) { x = x + 1; direction = "down"; break; }
-                    break;
-            }
-        }
-        System.out.println(index+"번째 : "+y);
-        return y;
     }
 }
