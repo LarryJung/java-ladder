@@ -16,9 +16,9 @@ public class InputView {
         }
     }
 
-    public static String[] getString() {
+    public static String getString() {
         try {
-            return scanner.nextLine().split(",");
+            return scanner.nextLine();
         } catch (InputMismatchException e) {
             System.out.println("please put a string type");
             return null;

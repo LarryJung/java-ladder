@@ -30,7 +30,7 @@ public class LadderController {
     private void initPrizes() {
         try {
             System.out.println("Put Prizes what you want. (separator, \",\") \n>>");
-            ArrayList<String> prizeNames = new ArrayList<String>(namesCheckReturn(InputView.getString()));
+            ArrayList<String> prizeNames = new ArrayList<String>(namesCheckReturn(InputView.getString().split(",")));
             this.prizes = makePrizes(prizeNames);
         } catch (InvalidNamesException e) {
             initPrizes();
@@ -41,7 +41,7 @@ public class LadderController {
     private void initPlayers() {
         try {
             System.out.println("Put player's name (separator, \",\") \n>>");
-            ArrayList<String> playerNames = new ArrayList<String>(namesCheckReturn(InputView.getString()));
+            ArrayList<String> playerNames = new ArrayList<String>(namesCheckReturn(InputView.getString().split(",")));
             this.players = makePlayers(playerNames);
         } catch (InvalidNamesException e) {
             initPlayers();
