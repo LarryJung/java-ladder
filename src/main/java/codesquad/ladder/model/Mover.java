@@ -34,7 +34,7 @@ public class Mover {
         switch (this.direction){
             case "down":
                 if (this.col == 0 && ladder.getLadderValue(this.row, this.col)) { this.col++; this.direction = "right"; break; }
-                if (this.col == 0 && !ladder.getLadderValue(this.row, this.col)) { row++; this.direction = "down"; break; }
+                if (this.col == 0 && !ladder.getLadderValue(this.row, this.col)) { this.row++; this.direction = "down"; break; }
                 if (this.col == maxRightIndex && ladder.getLadderValue(row, this.col - 1)) { this.col--; this.direction = "left"; break; }
                 if (this.col == maxRightIndex && !ladder.getLadderValue(row, this.col - 1)) { this.row++; this.direction = "down"; break; }
 

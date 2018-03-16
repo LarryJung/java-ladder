@@ -1,5 +1,7 @@
 package codesquad.ladder.controller;
 
+import codesquad.ladder.model.Ladder;
+import codesquad.ladder.model.Line;
 import codesquad.ladder.model.Player;
 import codesquad.ladder.model.exceptions.DuplicetedNameException;
 import codesquad.ladder.model.exceptions.InvalidNameSizeException;
@@ -112,7 +114,18 @@ public class LadderControllerTest {
     public void sizeLadderValidCheckReturnTest2() {
         int sizeLadder = 1;
         assertEquals(sizeLadder, LadderController.sizeLadderValidCheckReturn(sizeLadder));
-        ;
+    }
+
+    @Test
+    public void findLadderResult2Test() {
+        ArrayList<Line> ladderForm = new ArrayList<Line>();
+        ladderForm.add(new Line(new ArrayList<>(Arrays.asList(true, false))));
+        ladderForm.add(new Line(new ArrayList<>(Arrays.asList(false, false))));
+        Ladder ladder = new Ladder(ladderForm);
+
+        assertEquals(1, LadderController.findLadderResult2(0, ladder));
+        assertEquals(0, LadderController.findLadderResult2(1, ladder));
+        assertEquals(2, LadderController.findLadderResult2(2, ladder));
     }
 
 }

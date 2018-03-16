@@ -1,7 +1,5 @@
 package codesquad.ladder.model;
 
-import codesquad.ladder.model.exceptions.NoFrameException;
-
 public class Tracker {
 
     private int row; // row number
@@ -22,7 +20,7 @@ public class Tracker {
                 this.row = mover.getRow();
                 this.col = mover.getCol();
                 this.direction = mover.getDirection();
-            } catch (NoFrameException e) {
+            } catch (IndexOutOfBoundsException e) {
                 mover.directionSwitchAndMove(ladder);
                 this.row = mover.getRow();
                 this.col = mover.getCol();
