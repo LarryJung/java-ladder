@@ -1,4 +1,4 @@
 package codesquad.ladder.model.exceptions;
 
-public class InvalidNameSizeException extends InvalidPlayerNameException {
+public class InvalidNameSizeException extends InvalidNamesException {
 }

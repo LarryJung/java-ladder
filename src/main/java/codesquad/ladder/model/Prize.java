@@ -1,11 +1,10 @@
-
 package codesquad.ladder.model;
 
-public class Player {
+public class Prize {
 
     private String name;
 
-    public Player(String name) {
+    public Prize(String name) {
         this.name = name;
     }
 

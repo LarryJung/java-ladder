@@ -3,6 +3,7 @@ package codesquad.ladder.view;
 import codesquad.ladder.controller.LadderController;
 import codesquad.ladder.model.Ladder;
 import codesquad.ladder.model.Player;
+import codesquad.ladder.model.Prize;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
@@ -31,6 +32,8 @@ public class ResultView {
             printString(makeLadderHorizontalLine(ladder.getLadderForm().get(i).getPoints()));
             System.out.println();
         }
+        System.out.println();
+        printString(makePrizeNames(ladderController.getPrizes()));
     }
 
     // 플레이어 이름 스트링 반환
@@ -39,6 +42,16 @@ public class ResultView {
         String printNameSize = "%-" + Integer.toString(LADDER_HORIZONTAL_LINE_UNIT + NAME_SIZE_CORRECTION) + "s"; // %-6s
         for (Player player : players) {
             playerNames.append(String.format(printNameSize, player.getName()));
+        }
+        return playerNames.toString();
+    }
+
+    // 플레이어 이름 스트링 반환
+    static String makePrizeNames(ArrayList<Prize> prizes) {
+        StringBuilder playerNames = new StringBuilder();
+        String printNameSize = "%-" + Integer.toString(LADDER_HORIZONTAL_LINE_UNIT + NAME_SIZE_CORRECTION) + "s"; // %-6s
+        for (Prize prize : prizes) {
+            playerNames.append(String.format(printNameSize, prize.getName()));
         }
         return playerNames.toString();
     }
@@ -62,10 +75,9 @@ public class ResultView {
     public static void printResults(LadderController ladderController) {
         for (Player player: ladderController.getMap().keySet()){
             String key = player.getName();
-            String value = ladderController.getMap().get(player).toString();
+            String value = ladderController.getMap().get(player).getName();
             System.out.println(key + "번째 : " + value);
         }
-
     }
 }
 
