@@ -106,6 +106,7 @@ public class ResultView {
             System.out.println(String.format("%s : %s", key.getName(), value.getName()));
             printResults(ladderController);
         } catch (RuntimeException e){
+            System.out.println("please put the right Name. try again.");
             printResults(ladderController);
         }
     }
