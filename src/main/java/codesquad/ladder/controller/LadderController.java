@@ -145,14 +145,8 @@ public class LadderController {
 
     public void matchTotalResult() {
         for (int i = 0; i < this.players.size(); i++) {
-            map.put(this.players.get(i), this.prizes.get(findLadderResult2(i, this.ladder)));
+            map.put(this.players.get(i), this.prizes.get(ladder.trace(i)));
         }
-    }
-
-    static int findLadderResult2(int colIndex, Ladder ladder){
-        Tracker tracker = new Tracker(colIndex);
-        tracker.move(ladder);
-        return tracker.getCol();
     }
 
     public ArrayList<Prize> getPrizes() {

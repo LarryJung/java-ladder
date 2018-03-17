@@ -1,41 +1,89 @@
 package codesquad.ladder.model;
 
-public class Tracker {
+import java.util.Objects;
 
-    private int row; // row number
-    private int col; // column number
+public class Tracker {
+    private int col;
+    private int row;
     private String direction;
 
-    public Tracker(int col) {
-        this.col = col;
-        this.row = 0; // initialize
-        this.direction = "down"; // initialize
+    Tracker(int col) {
+        this(col, 0, "down");
     }
 
-    public void move(Ladder ladder) {
-        Mover mover = new Mover(this.row, this.col, this.direction);
-        while (this.row < ladder.getLadderForm().get(1).getPoints().size()) {
-            try {
-                mover.oneStepMove(ladder);
-                this.row = mover.getRow();
-                this.col = mover.getCol();
-                this.direction = mover.getDirection();
-            } catch (IndexOutOfBoundsException e) {
-                mover.directionSwitchAndMove(ladder);
-                this.row = mover.getRow();
-                this.col = mover.getCol();
-                this.direction = mover.getDirection();
+    private Tracker(int col, int row, String direction) {
+        this.col = col;
+        this.row = row;
+        this.direction = direction;
+    }
+
+    public Tracker nextTrack(Line line) {
+        try {
+        switch (this.direction){
+            case "down":
+                if (this.col == 0 && line.getPoint(this.col)) { moveRight(); break ;}
+                if (this.col == 0 && !line.getPoint(this.col)) { moveDown(); break ;}
+                if (line.getPoint(this.col - 1)) { moveLeft(); break ; }
+                if (line.getPoint(this.col)) { moveRight(); break ; }
+                if (!line.getPoint(this.col - 1) && !line.getPoint(this.col)) { moveDown(); break ; }
+            case "left":
+                if (this.col == 0 && !line.getPoint(this.col)) { moveDown(); break ;}
+                if (line.getPoint(this.col -1)) { moveLeft(); break ; }
+                if (line.getPoint(this.col -1)) { moveDown(); break ; }
+            case "right":
+                if (this.col == line.getPoints().size() && !line.getPoint(this.col - 1)) { moveDown(); break ;}
+                if (line.getPoint(this.col)) { moveRight(); break ;}
+                if (line.getPoint(this.col)) { moveDown(); break ; }
+        }
+        return new Tracker(this.col, this.row, this.direction);
+        } catch (IndexOutOfBoundsException e) {
+            switch (this.direction){
+            case "down":
+                if (this.col == 0 && line.getPoint(this.col)) { moveRight(); break ;}
+                if (this.col == 0 && !line.getPoint(this.col)) { moveDown(); break ;}
+                if (this.col == line.getPoints().size() && line.getPoint(this.col - 1)) { moveLeft(); break ;}
+                if (this.col == line.getPoints().size() && !line.getPoint(this.col - 1)) { moveDown(); break ;}
+            case "left":
+                if (this.col == 0 && !line.getPoint(this.col)) { moveDown(); break ;}
+            case "right":
+                if (this.col == line.getPoints().size() && !line.getPoint(this.col - 1)) { moveDown(); break ;}
             }
+            return new Tracker(this.col, this.row, this.direction);
         }
     }
 
     public int getCol() {
-        return this.col;
+        return col;
     }
 
-    /* I want to use like this.
-    Tracker tracker = new Tracker(initialize);
-    tracker.move(ladder);
-    int result = tracker.getCol();
-    * */
+    private void moveLeft(){
+        this.col--;
+        this.direction = "left";
+    }
+
+    private void moveRight(){
+        this.col++;
+        this.direction = "right";
+    }
+
+    private void moveDown(){
+        this.row++;
+        this.direction = "down";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Tracker) {
+            Tracker tracker = (Tracker) o;
+            return (col == tracker.col) && (row == tracker.row) && direction.equals(((Tracker) o).direction);
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(col, row, direction);
+    }
+
+
 }

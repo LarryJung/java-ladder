@@ -50,4 +50,7 @@ public class Line {
         return this.points;
     }
 
+    public boolean getPoint(int i) {
+        return points.get(i);
+    }
 }
