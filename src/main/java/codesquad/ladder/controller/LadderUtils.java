@@ -1,5 +1,4 @@
 package codesquad.ladder.controller;
-import codesquad.ladder.model.Ladder;
 
 public class LadderUtils {
 

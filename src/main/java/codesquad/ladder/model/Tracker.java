@@ -4,51 +4,36 @@ import java.util.Objects;
 
 public class Tracker {
     private int col;
-    private int row;
-    private String direction;
 
     Tracker(int col) {
-        this(col, 0, "down");
+        this.col = col;
     }
 
-    private Tracker(int col, int row, String direction) {
-        this.col = col;
-        this.row = row;
-        this.direction = direction;
+    private int colMoveInBody(int col, Line line) {
+        int index = col;
+        if (line.getPoint(index - 1)) col--;
+        if (line.getPoint(index)) col++;
+        return col;
+    }
+
+    private int colMoveAtFirstFrame(Line line) {
+        if (line.getPoint(0)) col++;
+        return col;
+    }
+
+    private int colMoveAtLastFrame(Line line) {
+        if (line.getPoint(line.getPoints().size() - 1)) col--;
+        return col;
     }
 
     public Tracker nextTrack(Line line) {
         try {
-        switch (this.direction){
-            case "down":
-                if (this.col == 0 && line.getPoint(this.col)) { moveRight(); break ;}
-                if (this.col == 0 && !line.getPoint(this.col)) { moveDown(); break ;}
-                if (line.getPoint(this.col - 1)) { moveLeft(); break ; }
-                if (line.getPoint(this.col)) { moveRight(); break ; }
-                if (!line.getPoint(this.col - 1) && !line.getPoint(this.col)) { moveDown(); break ; }
-            case "left":
-                if (this.col == 0 && !line.getPoint(this.col)) { moveDown(); break ;}
-                if (line.getPoint(this.col -1)) { moveLeft(); break ; }
-                if (line.getPoint(this.col -1)) { moveDown(); break ; }
-            case "right":
-                if (this.col == line.getPoints().size() && !line.getPoint(this.col - 1)) { moveDown(); break ;}
-                if (line.getPoint(this.col)) { moveRight(); break ;}
-                if (line.getPoint(this.col)) { moveDown(); break ; }
-        }
-        return new Tracker(this.col, this.row, this.direction);
+            return new Tracker(colMoveInBody(this.col, line));
         } catch (IndexOutOfBoundsException e) {
-            switch (this.direction){
-            case "down":
-                if (this.col == 0 && line.getPoint(this.col)) { moveRight(); break ;}
-                if (this.col == 0 && !line.getPoint(this.col)) { moveDown(); break ;}
-                if (this.col == line.getPoints().size() && line.getPoint(this.col - 1)) { moveLeft(); break ;}
-                if (this.col == line.getPoints().size() && !line.getPoint(this.col - 1)) { moveDown(); break ;}
-            case "left":
-                if (this.col == 0 && !line.getPoint(this.col)) { moveDown(); break ;}
-            case "right":
-                if (this.col == line.getPoints().size() && !line.getPoint(this.col - 1)) { moveDown(); break ;}
+            if (this.col == 0) {
+                return new Tracker(colMoveAtFirstFrame(line));
             }
-            return new Tracker(this.col, this.row, this.direction);
+            return new Tracker(colMoveAtLastFrame(line));
         }
     }
 
@@ -56,34 +41,17 @@ public class Tracker {
         return col;
     }
 
-    private void moveLeft(){
-        this.col--;
-        this.direction = "left";
-    }
-
-    private void moveRight(){
-        this.col++;
-        this.direction = "right";
-    }
-
-    private void moveDown(){
-        this.row++;
-        this.direction = "down";
-    }
-
     @Override
     public boolean equals(Object o) {
         if (o instanceof Tracker) {
             Tracker tracker = (Tracker) o;
-            return (col == tracker.col) && (row == tracker.row) && direction.equals(((Tracker) o).direction);
+            return (col == tracker.col);
         }
         return false;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(col, row, direction);
+        return Objects.hash(col);
     }
-
-
 }
