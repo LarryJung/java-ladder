@@ -1,7 +1,5 @@
 package codesquad.ladder.model;
 
-import java.util.Objects;
-
 public class Tracker {
     private int col;
 
@@ -9,19 +7,19 @@ public class Tracker {
         this.col = col;
     }
 
-    private int colMoveInBody(int col, Line line) {
+    int colMoveInBody(int col, Line line) {
         int index = col;
         if (line.getPoint(index - 1)) col--;
         if (line.getPoint(index)) col++;
         return col;
     }
 
-    private int colMoveAtFirstFrame(Line line) {
+    int colMoveAtFirstFrame(int col, Line line) {
         if (line.getPoint(0)) col++;
         return col;
     }
 
-    private int colMoveAtLastFrame(Line line) {
+    int colMoveAtLastFrame(int col, Line line) {
         if (line.getPoint(line.getPoints().size() - 1)) col--;
         return col;
     }
@@ -31,27 +29,13 @@ public class Tracker {
             return new Tracker(colMoveInBody(this.col, line));
         } catch (IndexOutOfBoundsException e) {
             if (this.col == 0) {
-                return new Tracker(colMoveAtFirstFrame(line));
+                return new Tracker(colMoveAtFirstFrame(this.col, line));
             }
-            return new Tracker(colMoveAtLastFrame(line));
+            return new Tracker(colMoveAtLastFrame(this.col, line));
         }
     }
 
     public int getCol() {
         return col;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (o instanceof Tracker) {
-            Tracker tracker = (Tracker) o;
-            return (col == tracker.col);
-        }
-        return false;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(col);
     }
 }
