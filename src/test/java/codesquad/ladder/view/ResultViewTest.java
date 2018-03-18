@@ -1,6 +1,7 @@
 package codesquad.ladder.view;
 
 import codesquad.ladder.model.Player;
+import codesquad.ladder.model.Prize;
 import org.junit.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,6 +20,18 @@ public class ResultViewTest {
 
         String expectedNames = "pobi  crong honux jk    ";
         assertEquals(expectedNames, ResultView.makePlayerNames(players));
+    }
+
+    @Test
+    public void makePrizeNamesTest(){
+        ArrayList<Prize> prizes = new ArrayList<Prize>();
+        prizes.add(new Prize("1"));
+        prizes.add(new Prize("2"));
+        prizes.add(new Prize("3"));
+        prizes.add(new Prize("4"));
+
+        String expectedNames = "1     2     3     4     ";
+        assertEquals(expectedNames, ResultView.makePrizeNames(prizes));
     }
 
     @Test

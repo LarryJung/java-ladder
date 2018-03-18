@@ -17,22 +17,22 @@ import static org.junit.Assert.assertEquals;
 public class LadderControllerTest {
 
     @Test(expected = InvalidNamesException.class)
-    public void playerNameCheckReturnTest1() {
-        String[] playerNames = {"pobi","pobi","honux","jk"};
-        LadderController.namesCheckReturn(playerNames);
+    public void nameCheckReturnTest1() {
+        String[] names = {"pobi","pobi","honux","jk"};
+        LadderController.namesCheckReturn(names);
     }
 
     @Test(expected = InvalidNamesException.class)
-    public void playerNameCheckReturnTest2() {
-        String[] playerNames = {"pobi","cronggg","honux","jk"};
-        LadderController.namesCheckReturn(playerNames);
+    public void nameCheckReturnTest2() {
+        String[] names = {"pobi","cronggg","honux","jk"};
+        LadderController.namesCheckReturn(names);
     }
 
     @Test
-    public void playerNameCheckReturnTest3() {
-        String[] playerNames = {"pobi", "crong", "honux", "jk"};
-        List<String> names = Arrays.asList("pobi", "crong", "honux", "jk");
-        assertEquals(names, LadderController.namesCheckReturn(playerNames));
+    public void nameCheckReturnTest3() {
+        String[] names = {"pobi", "crong", "honux", "jk"};
+        List<String> playerNames = Arrays.asList("pobi", "crong", "honux", "jk");
+        assertEquals(playerNames, LadderController.namesCheckReturn(names));
     }
 
     @Test(expected = InvalidNamesException.class)
@@ -101,7 +101,26 @@ public class LadderControllerTest {
         players.add(new Player("jk")); // index 2 wrong
 
         assertEquals(false, players.get(2).getName().equals(LadderController.makePlayers(names).get(2).getName()));
+    }
 
+    @Test
+    public void makePrizesTest1() {
+        ArrayList<String> names = new ArrayList<>(Arrays.asList("sad", "happy"));
+        ArrayList<Player> prizes = new ArrayList<>(Arrays.asList(new Player("sad"), new Player("happy")));
+
+        assertEquals(true, prizes.get(0).getName().equals(LadderController.makePrizes(names).get(0).getName()));
+        assertEquals(true, prizes.get(1).getName().equals(LadderController.makePrizes(names).get(1).getName()));
+    }
+
+    @Test
+    public void makePrizesTest2() {
+        ArrayList<String> names = new ArrayList<>(Arrays.asList("happy", "sad", "hello"));
+        ArrayList<Player> prizes = new ArrayList<Player>();
+        prizes.add(new Player("happy"));
+        prizes.add(new Player("sad"));
+        prizes.add(new Player("bye")); // index 2 wrong
+
+        assertEquals(false, prizes.get(2).getName().equals(LadderController.makePrizes(names).get(2).getName()));
     }
 
     @Test(expected = InvalidSizeLadderException.class)
